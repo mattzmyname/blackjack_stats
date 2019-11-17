@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
-import Blackjack_game from "./bj4d/Blackjack_game";
+import BlackjackGame from "./components/BlackjackGame";
 
 function App() {
-  return (
+
+    return (
     <div className="App">
-      <Blackjack_game></Blackjack_game>
+      <BlackjackGame />
     </div>
   );
 }
