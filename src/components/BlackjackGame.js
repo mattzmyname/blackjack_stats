@@ -13,11 +13,4 @@ export default class BlackjackGame extends Component {
     }
 }
 
-export function stateToProps(state) {
-    return {
-        turn: state.get('turn'),
-        deck: state.get('deck'),
-        dealer: state.get('dealer'),
-        player: state.get('player')
-    }
-}
+
