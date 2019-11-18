@@ -7,10 +7,17 @@ export default class Table extends Component{
     }
 
     render (){
+        const cards = this.props.cards.map((card, i) =>
+            <Card
+                rank={card.rank}
+                suit={card.suit}
+                isPrivate={false}
+                key={i}
+            />
+        );
         return(
             <div>
-                <Card suit={'h'} rank={'7'} isPrivate={true}/>
-                <Card suit={'h'} rank={'8'} isPrivate={false}/>
+                {cards}
             </div>
         );
     }

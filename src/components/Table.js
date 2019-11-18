@@ -10,10 +10,11 @@ export default class Table extends Component{
         this.state = {};
     }
     render (){
+        let testCards = [{rank:"7",suit:"c"}, {rank:"8",suit:"h"}];
         return(
             <div>
-                <Hand />
-                <Hand />
+                <Hand cards={testCards} />
+                <Hand cards={testCards} />
                 <Interface />
             </div>
         );
