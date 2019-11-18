@@ -7,6 +7,7 @@ import Interface from "./Interface";
 export default class Table extends Component{
     constructor(props){
         super(props);
+        console.log(this.props.deck.deal())
         this.state = {};
     }
     render (){
