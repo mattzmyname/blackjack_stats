@@ -2,6 +2,10 @@ import React, {Component} from 'react';
 import Card from './Card';
 
 export default class Table extends Component{
+    constructor(props){
+        super(props)
+    }
+
     render (){
         return(
             <div>
