@@ -20,8 +20,8 @@ function shuffleArray(array) {
 
 function createDeck() {
     const deck = [];
-    const ranks = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
-    const suits = ['H', 'S', 'C', 'D'];
+    const ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+    const suits = ['h', 's', 'c', 'd'];
 
     ranks.forEach((rank) => {
         suits.forEach((suit) => {
@@ -36,9 +36,9 @@ function createDeck() {
  * Deck of cards store.
  * Private variable used by Deck.
  *
- * @type       {WeakMap}
+ * @type       {Array}
  */
-let _deck = new WeakMap();
+let _deck = [];
 /**
  * Create a new Deck.
  * Privately stores deck of cards
@@ -55,23 +55,15 @@ export default class Deck {
      * Create the deck of cards and shuffle
      */
     create() {
-        _deck.set(this, shuffleArray(createDeck()));
+        _deck = shuffleArray(createDeck());
     }
-
-    /**
-     * Shuffle the deck of cards
-     */
-    shuffle() {
-        _deck.set(this, shuffleArray(_deck.get(this)));
-    }
-
     /**
      * Get the amount of remaning cards
      *
      * @return     {Integer} { deck size }
      */
     get length() {
-        return _deck.get(this).length;
+        return _deck.length;
     }
 
     /**
@@ -82,7 +74,7 @@ export default class Deck {
      * @return     {String} card.suit { card suit }
      */
     deal() {
-        let deck = _deck.get(this);
+        let deck = _deck;
 
         // create a new deck when
         // there are no more cards
@@ -92,7 +84,7 @@ export default class Deck {
         }
 
         const card = deck.pop();
-        _deck.set(this, deck);
+        _deck = deck;
 
         return card;
     }

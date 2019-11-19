@@ -7,15 +7,43 @@ import Interface from "./Interface";
 export default class Table extends Component{
     constructor(props){
         super(props);
-        console.log(this.props.deck.deal())
-        this.state = {};
+
+        this.state = {
+            deck: this.props.deck,
+            dealer : [this.props.deck.deal(), this.props.deck.deal()],
+            player : [this.props.deck.deal(), this.props.deck.deal()],
+            activeGame: true
+        };
+
+
     }
+    deal(){
+        let deck = this.state.deck;
+        let dealer = [];
+        let player = [];
+
+        if (deck.length < 6){
+            deck.create();
+        }
+        deck.deal(); //burn one card
+        player.push(deck.deal());
+        dealer.push(deck.deal());
+        player.push(deck.deal());
+        dealer.push(deck.deal());
+
+        this.setState({
+            deck: deck,
+            player: player,
+            dealer: dealer,
+            activeGame: true
+        });
+    }
+
     render (){
-        let testCards = [{rank:"7",suit:"c"}, {rank:"8",suit:"h"}];
         return(
             <div>
-                <Hand cards={testCards} />
-                <Hand cards={testCards} />
+                <Hand cards={this.state.dealer} player={'dealer'} />
+                <Hand cards={this.state.player} player={'player'} />
                 <Interface />
             </div>
         );

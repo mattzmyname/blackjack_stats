@@ -1,23 +1,24 @@
 import React, {Component} from 'react';
 import Card from './Card';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 
-export default class Table extends Component{
-    constructor(props){
-        super(props)
-    }
+export default class Hand extends Component{
+
 
     render (){
         const cards = this.props.cards.map((card, i) =>
             <Card
                 rank={card.rank}
                 suit={card.suit}
-                isPrivate={false}
+                isPrivate={this.props.player === 'dealer' && i === 0}
                 key={i}
             />
         );
         return(
-            <div>
-                {cards}
+            <div className="cards">
+                <CSSTransitionGroup transitionName="list" transitionEnterTimeout={800} transitionLeaveTimeout={300}>
+                    {cards}
+                </CSSTransitionGroup>
             </div>
         );
     }
