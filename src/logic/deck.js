@@ -18,20 +18,6 @@ function shuffleArray(array) {
 }
 
 
-function createDeck() {
-    const deck = [];
-    const ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-    const suits = ['h', 's', 'c', 'd'];
-
-    ranks.forEach((rank) => {
-        suits.forEach((suit) => {
-            deck.push({rank, suit});
-        });
-    });
-
-    return deck;
-}
-
 /**
  * Deck of cards store.
  * Private variable used by Deck.
@@ -55,7 +41,17 @@ export default class Deck {
      * Create the deck of cards and shuffle
      */
     create() {
-        _deck = shuffleArray(createDeck());
+        const deck = [];
+        const ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+        const suits = ['h', 's', 'c', 'd'];
+
+        ranks.forEach((rank) => {
+            suits.forEach((suit) => {
+                deck.push({rank, suit});
+            });
+        });
+
+        _deck = shuffleArray(deck);
     }
     /**
      * Get the amount of remaning cards

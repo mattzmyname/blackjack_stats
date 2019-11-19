@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Hand from './Hand'
 import Interface from "./Interface";
+import hand from '../logic/hand'
 
 //just use this https://github.com/xfhg/blackjackin
 
@@ -9,28 +10,31 @@ export default class Table extends Component{
         super(props);
 
         this.state = {
+            turn: 1,
             deck: this.props.deck,
-            dealer : [this.props.deck.deal(), this.props.deck.deal()],
-            player : [this.props.deck.deal(), this.props.deck.deal()],
+            dealer : new hand(),
+            player : new hand(),
             activeGame: true
         };
+    this.dealGame();
 
 
     }
-    deal(){
+    dealGame(){
         let deck = this.state.deck;
-        let dealer = [];
-        let player = [];
+        let dealer = this.state.dealer;
+        let player = this.state.player;
+        dealer.clear();
+        player.clear();
 
         if (deck.length < 6){
-            deck.create();
+            deck = new deck();
         }
         deck.deal(); //burn one card
-        player.push(deck.deal());
-        dealer.push(deck.deal());
-        player.push(deck.deal());
-        dealer.push(deck.deal());
-
+        player.draw(deck.deal());
+        dealer.draw(deck.deal());
+        player.draw(deck.deal());
+        dealer.draw(deck.deal());
         this.setState({
             deck: deck,
             player: player,
@@ -42,9 +46,9 @@ export default class Table extends Component{
     render (){
         return(
             <div>
-                <Hand cards={this.state.dealer} player={'dealer'} />
-                <Hand cards={this.state.player} player={'player'} />
-                <Interface />
+                <Hand cards={this.state.dealer.cards} player={'dealer'} turn={this.state.turn}/>
+                <Hand cards={this.state.player.cards} player={'player'} turn={this.state.turn}/>
+                <Interface {... stateToProps(this.state)}/>
             </div>
         );
     }
@@ -52,9 +56,10 @@ export default class Table extends Component{
 
 export function stateToProps(state) {
     return {
-        turn: state.get('turn'),
-        deck: state.get('deck'),
-        dealer: state.get('dealer'),
-        player: state.get('player')
+        turn: state['turn'],
+        deck: state['deck'],
+        dealer: state['dealer'],
+        player: state['player'],
+        activeGame: state['activeGame']
     }
 }

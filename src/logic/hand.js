@@ -5,18 +5,18 @@
  * @param      {Object}   card
  * @param      {Integer}  score.softTotal   Soft total
  * @param      {Integer}  score.hardTotal   Hard total
- * @param      {String}   card.rank Card rank
+ * @param      {Integer}   card.rank Card rank
  * @param      {String}   card.suit Card suit
  * @return     {Object}   The score.
  */
 function calculateScore(score, card) {
     // ace
-    if (card.rank === 'A') {
+    if (card.rank === 1) {
         score.hardTotal += 1;
         score.softTotal += ((score.softTotal + 11) > 21 ) ? 1 : 11;
     }
     // face cards
-    else if (typeof card.rank === 'string') {
+    else if (card.rank > 10) {
         score.hardTotal += 10;
         score.softTotal += 10;
     }
@@ -48,20 +48,7 @@ function calculateTotal(score) {
     return score.softTotal;
 }
 
-/**
- * Hand of cards store.
- * Private variable used by Hand.
- *
- * @type       {WeakMap}
- */
-let _hand = new WeakMap();
-/**
- * Hand stats store.
- * Private variable used by Hand.
- *
- * @type       {WeakMap}
- */
-let _stats = new WeakMap();
+
 
 /**
  * Create a new Blackjack Hand.
@@ -75,6 +62,23 @@ export default class Hand {
      * Sets initial states for _hand and _stats.
      */
     constructor() {
+        /**
+         * Hand of cards store.
+         * Private variable used by Hand.
+         *
+         * @type       {Array}
+         */
+        this._hand = [];
+        /**
+         * Hand stats store.
+         * Private variable used by Hand.
+         *
+         * @type       {Object}
+         */
+        this._stats = {
+            softTotal: 0,
+            hardTotal: 0,
+        };
         this.clear();
     }
 
@@ -87,12 +91,9 @@ export default class Hand {
      */
     draw(card) {
         // adds a card to the hand
-        let hand = _hand.get(this);
-        hand.push(card);
-        _hand.set(this, hand);
-
+        this._hand.push(card);
         // update stats
-        _stats.set(this, calculateScore(_stats.get(this), card));
+        this._stats = calculateScore(this._stats, card);
 
         return card;
     }
@@ -101,11 +102,11 @@ export default class Hand {
      * Sets the vars to the original state.
      */
     clear() {
-        _hand.set(this, []);
-        _stats.set(this, {
+        this._hand = [];
+        this._stats = {
             softTotal: 0,
             hardTotal: 0,
-        });
+        };
     }
 
     /**
@@ -114,18 +115,17 @@ export default class Hand {
      * @return     {Integer}  The total score.
      */
     get scoreTotal() {
-        return calculateTotal(_stats.get(this));
+        return calculateTotal(this._stats);
     }
 
     /**
      * Gets the statistics.
      *
      * @return     {Object}  The score stats.
-     * @return     {Integer} stats.softTotal { Soft total }
-     * @return     {Integer} stats.hardTotal { Hard total }
+
      */
     get scoreStats() {
-        return _stats.get(this);
+        return this._stats;
     }
 
     /**
@@ -134,7 +134,7 @@ export default class Hand {
      * @return     {Array}  Array of cards in the current hand
      */
     get cards() {
-        return _hand.get(this);
+        return this._hand;
     }
 
     /**

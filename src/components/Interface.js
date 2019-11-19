@@ -3,13 +3,12 @@ import Output from './Output'
 
 export default class Interface extends Component{
     render(){
+        console.log(this.props)
         return(
             <div>
                 <Output/>
-                {/* but the following code is owned by Interface */}
                 <div >
-                    <a>Dealer Score : </a>
-                    <a>Player Score : </a>
+                    <p>Player Score: {this.props.player.scoreTotal}</p>
                 </div>
                 <button >Deal</button>
                 <button>Hit</button>
