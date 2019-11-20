@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 
 export default class Output extends Component{
     render(){
         return(
-            <div>This is the output</div>
+            <div>{this.props.msg === null ? "Choose hit or stand" : this.props.msg}</div>
         )
     }
 }

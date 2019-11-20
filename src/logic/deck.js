@@ -34,13 +34,13 @@ let _deck = [];
  */
 export default class Deck {
     constructor() {
-        this.create();
+        this.newDeck();
     }
 
     /**
      * Create the deck of cards and shuffle
      */
-    create() {
+    newDeck() {
         const deck = [];
         const ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
         const suits = ['h', 's', 'c', 'd'];
@@ -72,10 +72,10 @@ export default class Deck {
     deal() {
         let deck = _deck;
 
-        // create a new deck when
+        // newDeck a new deck when
         // there are no more cards
         if (!deck.length) {
-            this.create();
+            this.newDeck();
             return this.deal();
         }
 

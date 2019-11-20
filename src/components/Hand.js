@@ -9,7 +9,7 @@ export default class Hand extends Component{
             <Card
                 rank={card.rank}
                 suit={card.suit}
-                isPrivate={this.props.player === 'dealer' && i === 0 && this.props.turn > 0}
+                isPrivate={this.props.player === 'dealer' && i === 0 && this.props.active}
                 key={i}
             />
         );
