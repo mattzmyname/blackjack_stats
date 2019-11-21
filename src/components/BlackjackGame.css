@@ -1,5 +1,8 @@
 body{
-    background: url('/src/assets/back.png');
+    background: url('https://www.solitaire-pyramid.com/solitaire/images/backgrounds/1920x1200/green_felt.jpg');
+}
+.game-body{
+    margin-top: 5%;
 }
 
 .hand{

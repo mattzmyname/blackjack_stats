@@ -40,17 +40,17 @@ export default class Deck {
     /**
      * Create the deck of cards and shuffle
      */
-    newDeck() {
+    newDeck(numDecks=1) {
         const deck = [];
         const ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
         const suits = ['h', 's', 'c', 'd'];
 
-        ranks.forEach((rank) => {
-            suits.forEach((suit) => {
-                deck.push({rank, suit});
+        for (let i=0; i < numDecks; i++)
+            ranks.forEach((rank) => {
+                suits.forEach((suit) => {
+                    deck.push({rank, suit});
+                });
             });
-        });
-
         _deck = shuffleArray(deck);
     }
     /**
