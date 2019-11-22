@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {getWinner} from "../logic/functions";
 import Button from 'react-bootstrap/Button';
-
-
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
 
 export default class Interface extends Component{
 
@@ -25,20 +25,41 @@ export default class Interface extends Component{
     }
 
     betInput(e){
-        console.log(e.target.value);
+        const re = /^[0-9\b]+$/;
+        if (e.target.value === '' || re.test(e.target.value)) {
+            this.props.betButton(parseInt(e.target.value));
+        }
     }
+
 
     render(){
 
         return(
             <div>
                 <div>{this.getOutcome(this.getWinnerMsg())}</div>
-                <div >
-                    <h2>Player Score: {this.props.player.scoreTotal}</h2>
+                <h2>Player Score: {this.props.player.scoreTotal}</h2>
+                <div className={"PrimaryButtons"}>
+                    <Button className="m-1" variant="info" size="lg" onClick={this.props.dealButton} disabled={this.props.activeGame}>Deal</Button>
+                    <Button className="m-1" variant="success" size="lg" onClick={this.props.hitButton} disabled={!this.props.activeGame}>Hit</Button>
+                    <Button className="m-1" variant="danger" size="lg" onClick={this.props.standButton}  disabled={!this.props.activeGame}>Stand</Button>
                 </div>
-                <Button className="m-1" color="outline-info" size="lg" onClick={!this.props.activeGame ? this.props.dealButton : null}>Deal</Button>
-                <Button className="m-1" color="success" size="lg" onClick={this.props.activeGame ? this.props.hitButton : null}>Hit</Button>
-                <Button className="m-1" color="danger" size="lg" onClick={this.props.activeGame ? this.props.standButton : null}>Stand</Button>
+                <div className={"SecondaryButtons"}>
+                    <Button className="m-1" color="outline-info" size="lg" onClick={this.props.doubleButton} disabled={!this.props.activeGame || this.props.numHits > 0} >Double</Button>
+                    <Button className="m-1" color="success" size="lg" onClick={this.props.activeGame ? this.props.hitButton : null} disabled>Split</Button>
+
+                </div>
+                <div className={"center-div"}>
+                    <InputGroup size="sm" className={"input-xs"} value={this.props.currentBet} onChange={this.betInput.bind(this)}>
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>Your Bet</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl
+                            placeholder={this.props.currentBet}
+                            aria-label="bet"
+                            aria-describedby="basic-addon1"
+                        />
+                    </InputGroup>
+                </div>
 
             </div>
         )
