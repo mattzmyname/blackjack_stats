@@ -9,10 +9,10 @@ import {getWinner, dealerDrawing} from '../logic/functions';
 export default class Table extends Component{
     constructor(props){
         super(props);
-
         this.state = {
             totalBet: 0,
             winCount: 0,
+            gamesPlayed: 0,
             deck: this.props.deck,
             dealer : new hand(),
             player : new hand(),
@@ -71,12 +71,19 @@ export default class Table extends Component{
                 this.stand();
         });
     }
+
     double(){
         this.changeBet(this.state.currentBet * 2);
         this.hit();
         if(!this.state.player.isBust && this.state.player.scoreTotal < 21)
             this.stand();
     }
+
+    split(){
+        // step 1 make a second hand
+        // i have no idea how to do this
+    }
+
     stand(){
         let deck = this.state.deck;
         let player = this.state.player;
@@ -100,14 +107,20 @@ export default class Table extends Component{
             activeGame: false,
             winCount: winCount,
             totalBet: this.state.totalBet + this.state.currentBet,
-            winnings: winnings
+            winnings: winnings,
+            gamesPlayed: this.state.gamesPlayed + 1
         });
     }
 
     render (){
         return(
             <div>
-                <Header winnings={this.state.winnings} totalBet={this.state.totalBet}/>
+                <Header
+                    winnings={this.state.winnings}
+                    totalBet={this.state.totalBet}
+                    gamesPlayed = {this.state.gamesPlayed}
+                    winCount = {this.state.winCount}
+                />
                 <div className="game-body">
                     <Hand cards={this.state.dealer.cards} player={'dealer'} active={this.state.activeGame}/>
                     <Hand cards={this.state.player.cards} player={'player'} active={this.state.activeGame}/>

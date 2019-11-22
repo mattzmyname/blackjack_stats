@@ -31,6 +31,15 @@ export default class Interface extends Component{
         }
     }
 
+    isSplittable(){
+        let playerHand = this.props.player.cards;
+        if (playerHand.length !== 2)
+            return false;
+        let cardOneValue = playerHand[0].rank < 10 ? playerHand[0].rank : 10;
+        let cardTwoValue = playerHand[1].rank < 10 ? playerHand[0].rank : 10;
+        return cardOneValue === cardTwoValue;
+
+    }
 
     render(){
 
@@ -44,8 +53,8 @@ export default class Interface extends Component{
                     <Button className="m-1" variant="danger" size="lg" onClick={this.props.standButton}  disabled={!this.props.activeGame}>Stand</Button>
                 </div>
                 <div className={"SecondaryButtons"}>
-                    <Button className="m-1" color="outline-info" size="lg" onClick={this.props.doubleButton} disabled={!this.props.activeGame || this.props.numHits > 0} >Double</Button>
-                    <Button className="m-1" color="success" size="lg" onClick={this.props.activeGame ? this.props.hitButton : null} disabled>Split</Button>
+                    <Button className="m-1" size="lg" onClick={this.props.doubleButton} disabled={!this.props.activeGame || this.props.numHits > 0} >Double</Button>
+                    <Button className="m-1" size="lg" onClick={this.props.standButton} disabled={!(this.props.activeGame || this.isSplittable())}>Split</Button>
 
                 </div>
                 <div className={"center-div"}>
