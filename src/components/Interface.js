@@ -54,7 +54,7 @@ export default class Interface extends Component{
                 </div>
                 <div className={"SecondaryButtons"}>
                     <Button className="m-1" size="lg" onClick={this.props.doubleButton} disabled={!this.props.activeGame || this.props.numHits > 0} >Double</Button>
-                    <Button className="m-1" size="lg" onClick={this.props.standButton} disabled={!(this.props.activeGame || this.isSplittable())}>Split</Button>
+                    <Button className="m-1" size="lg" onClick={this.props.splitButton} disabled={!this.props.activeGame || !this.isSplittable()}>Split</Button>
 
                 </div>
                 <div className={"center-div"}>

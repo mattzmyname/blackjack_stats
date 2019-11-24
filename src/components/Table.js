@@ -130,6 +130,7 @@ export default class Table extends Component{
                         hitButton={() => this.hit()}
                         standButton={() => this.stand()}
                         doubleButton={() => this.double()}
+                        splitButton={() => this.split()}
                         player={this.state.player}
                         dealer={this.state.dealer}
                         winCount={this.state.winCount}
