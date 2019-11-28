@@ -28,7 +28,7 @@ export function getWinner(playerScore, dealerScore) {
  * @param      {object}  playerHand  The player hand
  */
 export function dealerDrawing(dealerHand, deck, playerHand) {
-    if (!playerHand.isBust && !playerHand.hasBlackjack) {
+    if (!playerHand.isBust && !playerHand.hasBlackjack && !dealerHand.isBust) {
         let stats = dealerHand.scoreStats;
         while( (stats.hardTotal < 17) || (stats.softTotal < 18)) {
             dealerHand.draw(deck.deal());

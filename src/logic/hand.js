@@ -3,9 +3,9 @@
  *
  * @param      {Object}   score   The score
  * @param      {Object}   card
- * @param      {Integer}  score.softTotal   Soft total
- * @param      {Integer}  score.hardTotal   Hard total
- * @param      {Integer}   card.rank Card rank
+ * @param      {int}  score.softTotal   Soft total
+ * @param      {int}  score.hardTotal   Hard total
+ * @param      {int}   card.rank Card rank
  * @param      {String}   card.suit Card suit
  * @return     {Object}   The score.
  */
@@ -33,9 +33,9 @@ function calculateScore(score, card) {
  * Calculates the hand total score.
  *
  * @param      {Object}   score   The score
- * @param      {Integer}  score.softTotal   Soft total
- * @param      {Integer}  score.hardTotal   Hard total
- * @return     {Integer}  The total.
+ * @param      {int}  score.softTotal   Soft total
+ * @param      {int}  score.hardTotal   Hard total
+ * @return     {int}  The total.
  */
 function calculateTotal(score) {
     if (score.hardTotal === 21 || score.softTotal === 21) {
@@ -79,7 +79,13 @@ export default class Hand {
             softTotal: 0,
             hardTotal: 0,
         };
-        this.clear();
+        /**
+         * Hand bet store.
+         * Private variable used by Hand.
+         *
+         * @type       {int}
+         */
+        this._bet = 10;
     }
 
     /**
@@ -109,10 +115,21 @@ export default class Hand {
         };
     }
 
+
+    /**
+     * Gets the current hands bet.
+     *
+     * @return     {int}  bet
+     */
+
+
+    get bet(){
+        return this._bet;
+    }
     /**
      * Gets the total score.
      *
-     * @return     {Integer}  The total score.
+     * @return     {int}  The total score.
      */
     get scoreTotal() {
         return calculateTotal(this._stats);
@@ -153,5 +170,13 @@ export default class Hand {
      */
     get hasBlackjack() {
         return this.cards.length === 2 && this.scoreTotal === 21;
+    }
+
+    /**
+     * changes this hands bet to the new bet
+     * @param newBet
+     */
+    set bet(newBet){
+        this._bet = newBet;
     }
 }

@@ -1,28 +1,10 @@
 import React, {Component} from 'react';
-import {getWinner} from "../logic/functions";
 import Button from 'react-bootstrap/Button';
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
 export default class Interface extends Component{
 
-    getOutcome(win){
-        switch(win) {
-            case (1):
-                return 'WIN!';
-            case (-1):
-                return 'LOST!';
-            case (0):
-                return 'PUSH!';
-            default:
-                return null
-        }
-    }
-    getWinnerMsg(){
-        if (!this.props.activeGame)
-            return getWinner(this.props.player.scoreTotal, this.props.dealer.scoreTotal);
-        return null;
-    }
 
     betInput(e){
         const re = /^[0-9\b]+$/;
@@ -32,21 +14,19 @@ export default class Interface extends Component{
     }
 
     isSplittable(){
-        let playerHand = this.props.player.cards;
+        let playerHand = this.props.player[this.props.currentHandIdx].cards;
         if (playerHand.length !== 2)
             return false;
         let cardOneValue = playerHand[0].rank < 10 ? playerHand[0].rank : 10;
-        let cardTwoValue = playerHand[1].rank < 10 ? playerHand[0].rank : 10;
+        let cardTwoValue = playerHand[1].rank < 10 ? playerHand[1].rank : 10;
         return cardOneValue === cardTwoValue;
 
     }
 
     render(){
-
         return(
             <div>
-                <div>{this.getOutcome(this.getWinnerMsg())}</div>
-                <h2>Player Score: {this.props.player.scoreTotal}</h2>
+                <h2>Player Score: {this.props.player[this.props.currentHandIdx].scoreTotal}</h2>
                 <div className={"PrimaryButtons"}>
                     <Button className="m-1" variant="info" size="lg" onClick={this.props.dealButton} disabled={this.props.activeGame}>Deal</Button>
                     <Button className="m-1" variant="success" size="lg" onClick={this.props.hitButton} disabled={!this.props.activeGame}>Hit</Button>
