@@ -92,10 +92,10 @@ export default class Table extends Component{
         dealerDrawing(dealer, deck, player);
         const winner  = getWinner(player.scoreTotal, dealer.scoreTotal);
         const winCount = winner === 1 ? this.state.winCount + 1 : this.state.winCount;
-        let winnings = 0;
+        let winnings;
         if (winner > 0)
             winnings = this.state.winnings + this.state.currentBet;
-        else if (winnings < 0)
+        else if (winner < 0)
             winnings = this.state.winnings - this.state.currentBet;
         else
             winnings = this.state.winnings;
