@@ -8,10 +8,8 @@ export default class BlackjackGame extends Component {
     render() {
         return (
             <div>
-                <Table deck={new deck()} />
+                <Table deck={new deck()}/>
             </div>
         );
     }
 }
-
-

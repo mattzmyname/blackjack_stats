@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import Hand from './Hand'
 import Interface from "./Interface";
 import hand from '../logic/hand'
+import Hints from "./Hints";
 import Header from "./Header";
 import {getWinner, dealerDrawing} from '../logic/functions';
+import Sidebar from "react-sidebar";
 
 
 export default class Table extends Component{
@@ -17,10 +19,21 @@ export default class Table extends Component{
             currentHandIdx: 0,
             activeGame: true,
             winnings: 0,
-            numHits: 0,
-            winCount: 0
+            winCount: 0,
+            showSidebar: false
+
         };
+        this.onSetSidebarOpen = this.onSetSidebarOpen(this)
         this.deal()
+    }
+
+    onSetSidebarOpen(open) {
+        this.setState({ showSidebar: open });
+    }
+
+    sideBarToggle(){
+        this.setState({showSidebar: !this.state.showSidebar});
+
     }
 
     changeBet(newBet){
@@ -36,6 +49,7 @@ export default class Table extends Component{
     getCurrentHand(){
         return this.state.player[this.state.currentHandIdx];
     }
+
     deal(){
         let deck = this.state.deck;
         let dealer = this.state.dealer;
@@ -55,11 +69,12 @@ export default class Table extends Component{
             player: [curHand],
             currentHandIdx: 0,
             dealer: dealer,
-            activeGame: true,
-            numHits: 0
+            activeGame: true
         });
-        if (curHand.scoreTotal >= 21)
+        if (curHand.hasBlackjack){
+            console.log("Blackjack!")
             this.stand();
+        }
     }
 
     hit(){
@@ -72,22 +87,24 @@ export default class Table extends Component{
         this.setState({
             deck: deck,
             player: player,
-            numHits: this.state.numHits + 1
         }, () => {
             // automatically stand if bust
             if (curHand.isBust|| curHand.scoreTotal >= 21)
                 this.stand();
         });
     }
-
+    // bug exists where players bet is sometimes not correctly doubled
     double(){
-        this.changeBet(this.getCurrentHand().bet * 2);
+        let originalBet = this.getCurrentHand().bet;
+        this.changeBet(originalBet* 2);
         this.hit();
         if(!this.getCurrentHand().isBust && this.getCurrentHand().scoreTotal < 21)
             this.stand();
-        this.changeBet(this.getCurrentHand().bet / 2);
+        this.changeBet(originalBet);
 
     }
+
+
 
     split(){
         // step 1 make a second hand
@@ -182,26 +199,35 @@ export default class Table extends Component{
                     totalBet={this.state.totalBet}
                     gamesPlayed = {this.state.gamesPlayed}
                     winCount = {this.state.winCount}
+                    sidebar={() => this.sideBarToggle()}
                 />
-                <div className="game-body">
-                    <Hand cards={this.state.dealer.cards} player={'dealer'} active={this.state.activeGame}/>
-                    {playHands}
-                    <Interface
-                        activeGame={this.state.activeGame}
-                        dealButton={() => this.deal()}
-                        hitButton={() => this.hit()}
-                        standButton={() => this.stand()}
-                        doubleButton={() => this.double()}
-                        splitButton={() => this.split()}
-                        player={this.state.player}
-                        currentHandIdx={this.state.currentHandIdx}
-                        dealer={this.state.dealer}
-                        winCount={this.state.winCount}
-                        currentBet={this.getCurrentHand().bet}
-                        betButton={(n) => this.changeBet(n)}
-                        numHits={this.state.numHits}
-                    />
-                </div>
+                <Sidebar
+                    children={
+                        <div className="game-body">
+                            <Hand cards={this.state.dealer.cards} player={'dealer'} active={this.state.activeGame}/>
+                            {playHands}
+                            <Interface
+                                activeGame={this.state.activeGame}
+                                dealButton={() => this.deal()}
+                                hitButton={() => this.hit()}
+                                standButton={() => this.stand()}
+                                doubleButton={() => this.double()}
+                                splitButton={() => this.split()}
+                                player={this.state.player}
+                                currentHandIdx={this.state.currentHandIdx}
+                                dealer={this.state.dealer}
+                                winCount={this.state.winCount}
+                                currentBet={this.getCurrentHand().bet}
+                                betButton={(n) => this.changeBet(n)}
+                            />
+                        </div>
+                    }
+                    docked={this.state.showSidebar}
+                    sidebar={<Hints/>}
+                    onSetOpen={this.onSetSidebarOpen}
+                    pullRight={true}
+                />
+
 
             </div>
         );

@@ -31,8 +31,8 @@ export default class Hand extends Component{
             />
 
         );
-        let isCurrentHand = (this.props.player === 'player' && this.props.currentHandIdx === this.props.handID);
-        console.log(isCurrentHand);
+        // let isCurrentHand = (this.props.player === 'player' && this.props.currentHandIdx === this.props.handID);
+        // console.log(isCurrentHand);
         return(
             <div className={'hand'}>
                 {cards}

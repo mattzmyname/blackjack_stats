@@ -2,7 +2,7 @@ body{
     background: url('https://www.solitaire-pyramid.com/solitaire/images/backgrounds/1920x1200/green_felt.jpg');
 }
 .game-body{
-    margin-top: 5%;
+    margin-top: 7%;
 }
 .center-div
 {
@@ -44,4 +44,8 @@ body{
 .selectedHand{
     border-bottom-style: solid;
     border-color: red;
+}
+
+.sidebar{
+    padding-top: 50%;
 }
