@@ -24,7 +24,9 @@ export default class Header extends Component{
             >
                 <Navbar.Brand href="#home">{msg}</Navbar.Brand>
                 <h4 className={'ml-auto'}>
-                    <span>Show Hints</span>
+                    <span style={{
+                        paddingBottom: '5px'
+                    }}>Show Hints</span>
                     <Switch onChange={this.handleChange} checked={this.state.checked} />
                 </h4>
             </Navbar>

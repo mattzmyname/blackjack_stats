@@ -4,9 +4,9 @@ import React, {Component} from 'react';
  *
  * @class      Info (name)
  * @param      {Object}          props             Component properties
- * @param      {Integer}         props.rank        Card's rank
+ * @param      {int}         props.rank        Card's rank
  * @param      {String}          props.suit        Card's suit
- * @param      {Bool}            props.isPrivate   Should rank & suit be rendered
+ * @param      {boolean}            props.isPrivate   Should rank & suit be rendered
  * @return     {ReactElement}    markup
  */
 export default class Card extends Component{
@@ -18,7 +18,7 @@ export default class Card extends Component{
         /* in react we pass the css properties as an object with camelCase variables referring to the respective CSS variables */
 
         return(
-            <img src={image} alt={""+ this.props.suit + this.props.rank}/>
+            <img src={image} alt={""}/>
         )
     }
 }

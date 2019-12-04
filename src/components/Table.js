@@ -23,7 +23,7 @@ export default class Table extends Component{
             showSidebar: false
 
         };
-        this.onSetSidebarOpen = this.onSetSidebarOpen(this)
+        this.onSetSidebarOpen = this.onSetSidebarOpen(this);
         this.deal()
     }
 
@@ -72,7 +72,7 @@ export default class Table extends Component{
             activeGame: true
         });
         if (curHand.hasBlackjack){
-            console.log("Blackjack!")
+            console.log("Blackjack!");
             this.stand();
         }
     }
@@ -222,10 +222,18 @@ export default class Table extends Component{
                             />
                         </div>
                     }
-                    docked={this.state.showSidebar}
-                    sidebar={<Hints/>}
+                    open={this.state.showSidebar}
+                    sidebar={
+                        <Hints
+                            player={this.state.player}
+                            currentHandIdx={this.state.currentHandIdx}
+                            dealer={this.state.dealer}
+                            deck={this.state.deck}
+                        />
+                    }
                     onSetOpen={this.onSetSidebarOpen}
                     pullRight={true}
+                    styles={{ sidebar: { background: "green" } }}
                 />
 
 

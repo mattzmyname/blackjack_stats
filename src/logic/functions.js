@@ -1,3 +1,6 @@
+import Deck from "./deck";
+import Hand from "./hand";
+import cloneDeep from 'lodash/cloneDeep';
 
 /**
  * Gets the winner.
@@ -23,9 +26,9 @@ export function getWinner(playerScore, dealerScore) {
  * Do not hit if the player is already bust
  * or the player has blackjack.
  *
- * @param      {object}  dealerHand  The dealer hand
- * @param      {object}  deck        The deck
- * @param      {object}  playerHand  The player hand
+ * @param      {Hand}  dealerHand  The dealer hand
+ * @param      {Deck}  deck        The deck
+ * @param      {Hand}  playerHand  The player hand
  */
 export function dealerDrawing(dealerHand, deck, playerHand) {
     if (!playerHand.isBust && !playerHand.hasBlackjack && !dealerHand.isBust) {
@@ -49,4 +52,33 @@ export function calculateWinPercentage(winCount, roundCount) {
     num = isNaN(num) ? 0 : isFinite(num) ? num : 0;
 
     return +(num * 100).toFixed(2) + '%';
+}
+
+/**
+ *
+ * @param {Hand} player
+ * @param {Hand} dealer
+ * @param {Deck} deck
+ * @param withReplacement
+ */
+export function getPercentageExperiment(player, dealer, deck, withReplacement = true) {
+    let winCount = 0;
+    let iterations = 10000;
+    let deckCopy;
+    for(let i = 0; i < iterations; i++){
+        if(withReplacement)
+            deckCopy = new Deck();
+        else{
+            deckCopy = cloneDeep(deck);
+            deckCopy.shuffle();
+        }
+
+        let dealerCopy = new Hand();
+        dealerCopy.draw(dealer.cards[dealer.cards.length-1]);
+        dealerDrawing(dealerCopy, deckCopy, player);
+        if(player.scoreTotal >= dealerCopy.scoreTotal || dealerCopy.scoreTotal > 21)
+            winCount++;
+    }
+    return Math.round(((winCount / iterations) * 100));
+
 }

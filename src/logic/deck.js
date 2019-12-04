@@ -1,30 +1,7 @@
 
 
-/**
- * Creates a deck.
- * Private function used by Deck.
- *
- * @return     {Array}  { standard deck of cards }
- */
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-    return array;
-}
 
 
-/**
- * Deck of cards store.
- * Private variable used by Deck.
- *
- * @type       {Array}
- */
-let _deck = [];
 /**
  * Create a new Deck.
  * Privately stores deck of cards
@@ -34,7 +11,31 @@ let _deck = [];
  */
 export default class Deck {
     constructor() {
+        this._deck = [];
         this.newDeck();
+    }
+
+    /**
+     * shuffles the current deck
+     */
+    shuffle(){
+        this._deck = this.shuffleArray(this._deck);
+    }
+    /**
+     * Creates a deck.
+     * Private function used by Deck.
+     *
+     * @return     {Array}  { standard deck of cards }
+     */
+
+    shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
     }
 
     /**
@@ -51,15 +52,15 @@ export default class Deck {
                     deck.push({rank, suit});
                 });
             });
-        _deck = shuffleArray(deck);
+        this._deck = this.shuffleArray(deck);
     }
     /**
      * Get the amount of remaning cards
      *
-     * @return     {Integer} { deck size }
+     * @return     {int} { deck size }
      */
     get length() {
-        return _deck.length;
+        return this._deck.length;
     }
 
     /**
@@ -69,8 +70,17 @@ export default class Deck {
      * @return     {String} card.rank { card rank }
      * @return     {String} card.suit { card suit }
      */
+
+    get deck(){
+        return this._deck;
+    }
+
+    set deck(newDeck){
+        this._deck = newDeck;
+    }
+
     deal() {
-        let deck = _deck;
+        let deck = this._deck;
 
         // newDeck a new deck when
         // there are no more cards
@@ -80,7 +90,7 @@ export default class Deck {
         }
 
         const card = deck.pop();
-        _deck = deck;
+        this._deck = deck;
 
         return card;
     }
