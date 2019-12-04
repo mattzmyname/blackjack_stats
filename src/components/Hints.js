@@ -22,7 +22,6 @@ export default class Hints extends PureComponent{
         let winPct = memoizedPct(playerHand, dealer, deck, false);
 
 
-        console.log(winPct);
         return(
             <div className={'sidebar'}>
                 <p>% Chance to win: {winPct}%</p>
