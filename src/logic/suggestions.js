@@ -3,7 +3,7 @@ import {isSplittable} from "./functions";
 
 const advice = {
     split: 'Split',
-    stay: 'Stay',
+    stand: 'Stand',
     double: 'Double',
     hit: 'Hit',
     blackjack: 'Blackjack',
@@ -49,9 +49,9 @@ function calculateSplitAdvice(playerHand, dealerCard) {
             if (dealerCard <= 9 && dealerCard !== 7) {
                 return advice.split;
             }
-            return advice.stay;
+            return advice.stand;
         case 10:
-            return advice.stay;
+            return advice.stand;
         default:
             return;
     }
@@ -93,12 +93,12 @@ function calculateSoftAdvice(playerHand, dealerCard) {
             if (dealerCard <= 6) {
                 return advice.double;
             } else if (dealerCard <= 8) {
-                return advice.stay;
+                return advice.stand;
             }
             return advice.hit;
         case 8:
         case 9:
-            return advice.stay;
+            return advice.stand;
         case 10:
             return advice.blackjack;
         default:
@@ -134,7 +134,7 @@ function calculateHardAdvice(playerHand, dealerCard) {
             return advice.double;
         case 12:
             if (dealerCard >= 4 && dealerCard <= 6) {
-                return advice.stay;
+                return advice.stand;
             }
             return advice.hit;
         case 13:
@@ -142,13 +142,13 @@ function calculateHardAdvice(playerHand, dealerCard) {
         case 15:
         case 16:
             if (dealerCard <= 6) {
-                return advice.stay;
+                return advice.stand;
             }
             return advice.hit;
         case 17:
         case 18:
         case 19:
-            return advice.stay;
+            return advice.stand;
         default:
             return;
     }
