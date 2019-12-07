@@ -72,7 +72,6 @@ export default class Table extends Component{
             activeGame: true
         });
         if (curHand.hasBlackjack){
-            console.log("Blackjack!");
             this.stand();
         }
     }
