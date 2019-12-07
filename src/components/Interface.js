@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Button from 'react-bootstrap/Button';
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import {isSplittable} from "../logic/functions";
 
 export default class Interface extends Component{
 
@@ -13,13 +14,9 @@ export default class Interface extends Component{
         }
     }
 
-    isSplittable(){
+    canSplit(){
         let playerHand = this.props.player[this.props.currentHandIdx].cards;
-        if (playerHand.length !== 2)
-            return false;
-        let cardOneValue = playerHand[0].rank < 10 ? playerHand[0].rank : 10;
-        let cardTwoValue = playerHand[1].rank < 10 ? playerHand[1].rank : 10;
-        return cardOneValue === cardTwoValue;
+        return isSplittable(playerHand)
 
     }
 
@@ -35,7 +32,7 @@ export default class Interface extends Component{
                 </div>
                 <div className={"SecondaryButtons"}>
                     <Button className="m-1" size="lg" onClick={this.props.doubleButton} disabled={!this.props.activeGame || playerHand.length > 2} >Double</Button>
-                    <Button className="m-1" size="lg" onClick={this.props.splitButton} disabled={!this.props.activeGame || !this.isSplittable()}>Split</Button>
+                    <Button className="m-1" size="lg" onClick={this.props.splitButton} disabled={!this.props.activeGame || !this.canSplit()}>Split</Button>
 
                 </div>
                 <div className={"center-div"}>
