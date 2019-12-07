@@ -72,7 +72,7 @@ export function calculateWinPercentage(winCount, roundCount) {
  */
 export function getPercentageExperiment(player, dealer, deck, withReplacement = true) {
     let winCount = 0;
-    let iterations = 10000;
+    let iterations = 2000;
     let deckCopy;
     for(let i = 0; i < iterations; i++){
         if(withReplacement)

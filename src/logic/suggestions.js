@@ -1,7 +1,7 @@
 import Hand from "./hand";
 import {isSplittable} from "./functions";
 
-export const advice = {
+const advice = {
     split: 'Split',
     stay: 'Stay',
     double: 'Double',
@@ -11,7 +11,7 @@ export const advice = {
 };
 
 
-export function calculateSplitAdvice(playerHand, dealerCard) {
+function calculateSplitAdvice(playerHand, dealerCard) {
 
     let userCard1 = playerHand.cards[0].rank;
     let userCard2 = playerHand.cards[1].rank;
@@ -45,7 +45,6 @@ export function calculateSplitAdvice(playerHand, dealerCard) {
             }
             return advice.hit;
         case 8:
-
         case 9:
             if (dealerCard <= 9 && dealerCard !== 7) {
                 return advice.split;
@@ -58,7 +57,7 @@ export function calculateSplitAdvice(playerHand, dealerCard) {
     }
 }
 
-export function calculateSoftAdvice(playerHand, dealerCard) {
+function calculateSoftAdvice(playerHand, dealerCard) {
 
     let userCard1 = playerHand.cards[0].rank;
     let userCard2 = playerHand.cards[1].rank;
@@ -70,8 +69,8 @@ export function calculateSoftAdvice(playerHand, dealerCard) {
         return;
     }
 
-    const card = userCard1 === 1 ? userCard2 : userCard1;
-
+    let card = userCard1 === 1 ? userCard2 : userCard1;
+    card = card > 10 ? 10: card;
     switch (card) {
         case 2:
         case 3:
@@ -107,7 +106,7 @@ export function calculateSoftAdvice(playerHand, dealerCard) {
     }
 }
 
-export function calculateHardAdvice(playerHand, dealerCard) {
+function calculateHardAdvice(playerHand, dealerCard) {
 
 
     const cardTotal = playerHand.scoreTotal;
@@ -155,7 +154,7 @@ export function calculateHardAdvice(playerHand, dealerCard) {
     }
 }
 
-export default function getAdvice(playerHand, dealer) {
+export function getAdvice(playerHand, dealer) {
     // get face up dealer card for comparison
     let dealerCopy = new Hand();
     dealerCopy.draw(dealer.cards[dealer.cards.length-1]);
