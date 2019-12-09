@@ -224,6 +224,7 @@ export default class Table extends Component{
                     open={this.state.showSidebar}
                     sidebar={
                         <Hints
+                            activeGame={this.state.activeGame}
                             player={this.state.player}
                             currentHandIdx={this.state.currentHandIdx}
                             dealer={this.state.dealer}

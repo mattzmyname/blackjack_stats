@@ -94,4 +94,13 @@ export default class Deck {
 
         return card;
     }
+
+    tensRemaining(){
+        let tenCount = 0;
+        for (let i = 0; i< this._deck.length; i++){
+            if(this._deck[i].rank >= 10)
+                tenCount++;
+        }
+        return tenCount;
+    }
 }

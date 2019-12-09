@@ -14,13 +14,16 @@ export default class Hints extends Component{
 
 
     render() {
+        const numDecks = 1;
         let playerHand = this.props.player[this.props.currentHandIdx];
         let dealer = this.props.dealer;
         let suggestion = getAdvice(playerHand, dealer);
-
+        let tensRemaining = this.props.deck.tensRemaining();
+        tensRemaining = (this.props.activeGame && tensRemaining < 16*numDecks) ? tensRemaining + 1: tensRemaining;
         return(
             <div className={'sidebar'}>
                 <p>% Chance Dealer Busts: {this.oddsDealerBust(dealer.cards[dealer.cards.length-1])}%</p>
+                <p>Tens Remaining in Deck: {tensRemaining}</p>
                 <div className={"suggestion"}>
                     <p>Recommended Action</p>
                     <h3 className={"advice-text " + suggestion}>{suggestion}</h3>
