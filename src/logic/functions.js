@@ -2,6 +2,15 @@ import Deck from "./deck";
 import Hand from "./hand";
 import cloneDeep from 'lodash/cloneDeep';
 
+export function isSplittable(playerHand){
+    if (playerHand.length !== 2)
+        return false;
+    let cardOneValue = playerHand[0].rank < 10 ? playerHand[0].rank : 10;
+    let cardTwoValue = playerHand[1].rank < 10 ? playerHand[1].rank : 10;
+    return cardOneValue === cardTwoValue;
+
+}
+
 /**
  * Gets the winner.
  *
@@ -63,7 +72,7 @@ export function calculateWinPercentage(winCount, roundCount) {
  */
 export function getPercentageExperiment(player, dealer, deck, withReplacement = true) {
     let winCount = 0;
-    let iterations = 10000;
+    let iterations = 2000;
     let deckCopy;
     for(let i = 0; i < iterations; i++){
         if(withReplacement)
