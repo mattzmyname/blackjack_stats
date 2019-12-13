@@ -12,6 +12,14 @@ export default class Hints extends Component{
         return odds[index];
     }
 
+    countValue(card){
+        if (card.rank >= 10 || card.rank === 1)
+            return -1;
+        else if (card.rank <= 6 && card.rank > 1)
+            return 1;
+        else
+            return 0;
+    }
 
     render() {
         const numDecks = 1;
@@ -20,10 +28,12 @@ export default class Hints extends Component{
         let suggestion = getAdvice(playerHand, dealer);
         let tensRemaining = this.props.deck.tensRemaining();
         tensRemaining = (this.props.activeGame && tensRemaining < 16*numDecks) ? tensRemaining + 1: tensRemaining;
+        let currentCount = this.props.activeGame ? this.props.deck.count - this.countValue(dealer.cards[0]): this.props.deck.count;
         return(
             <div className={'sidebar'}>
                 <p>% Chance Dealer Busts: {this.oddsDealerBust(dealer.cards[dealer.cards.length-1])}%</p>
                 <p>Tens Remaining in Deck: {tensRemaining}</p>
+                <p>Current Count: {currentCount}</p>
                 <div className={"suggestion"}>
                     <p>Recommended Action</p>
                     <h3 className={"advice-text " + suggestion}>{suggestion}</h3>

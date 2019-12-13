@@ -59,7 +59,6 @@ export default class Table extends Component{
         if (deck.length < 6){
             deck.newDeck();
         }
-        deck.deal(); //burn one card
         curHand.draw(deck.deal());
         dealer.draw(deck.deal());
         curHand.draw(deck.deal());

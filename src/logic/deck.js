@@ -12,7 +12,9 @@
 export default class Deck {
     constructor() {
         this._deck = [];
+        this.trueCount = 0;
         this.newDeck();
+
     }
 
     /**
@@ -53,6 +55,7 @@ export default class Deck {
                 });
             });
         this._deck = this.shuffleArray(deck);
+        this.deal(true);
     }
     /**
      * Get the amount of remaning cards
@@ -70,6 +73,9 @@ export default class Deck {
      * @return     {String} card.rank { card rank }
      * @return     {String} card.suit { card suit }
      */
+    get count(){
+        return this.trueCount;
+    }
 
     get deck(){
         return this._deck;
@@ -79,7 +85,8 @@ export default class Deck {
         this._deck = newDeck;
     }
 
-    deal() {
+
+    deal(ignoreCount=false) {
         let deck = this._deck;
 
         // newDeck a new deck when
@@ -91,6 +98,13 @@ export default class Deck {
 
         const card = deck.pop();
         this._deck = deck;
+        if (!ignoreCount){
+            if (card.rank >= 10 || card.rank === 1)
+                this.trueCount -= 1;
+            else if (card.rank <= 6 && card.rank > 1)
+                this.trueCount += 1;
+
+        }
 
         return card;
     }
